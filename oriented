@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id ="txtNotice"></p>
+
+    <script>
+        var text, parser, xmlDoc;
+        text = "<bookstore><book>"+
+               "<title>Everyday Italian</title>"+
+               "<author>Giada De Laurentiis</athor>"+
+               "<year>2005</year>"+
+               "</book></bookstore>";
+        
+        parser = new DOMParser();
+        xmlDoc = parser.parseFromString(text, "text/xml");
+
+        // changig line -----------
+        var bookNode = xmlDoc.getElementsByTagName("book")[0];
+        var values =[];
+
+        for(var i=0; i<bookNode.childNodes.length; i++){
+            var childNode=bookNode.childNodes[i];
+            if(childNode.nodeType==1){
+                values.push(childNode.nodeName+ ":" + childNode.textContent);
+            }
+
+            
+        }
+
+        document.getElementById("txtNotice").innerHTML= values.join("<br>");
+
+        // document.getElementById("txtNotice").innerHTML= 
+        // xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+        
+    </script>
+</body>
+</html>
+
+
+
+-----------------------------------------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>The XMLHttpRequest object</h2>
+    <div id="demo">
+        <p>Let AJX change this text.</p>
+        <button type="button" onclick="loadDoc()">change content</button>
+    </div>
+
+    <script>
+        function loadDoc(){
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                document.getElementById("demo").innerHTML= this.responseText;
+            }
+            xhttp.open("GET", "ajax.txt", true);
+            xhttp.send();
+        }
+    </script>
+</body>
+</html>
